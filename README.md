@@ -14,7 +14,7 @@ You can download the dataset from [https://nlp4lp.vercel.app/](https://nlp4lp.ve
 ## Usage
 
 1. Clone this repository
-2. Download [NLP4LP dataset zip file](https://nlp4lp.vercel.app/), extract the contents, and place "datasets" folder in the root directory of the repo (beside gpt4or.py):
+2. Download [NLP4LP dataset zip file](https://nlp4lp.vercel.app/), extract the contents, and replace the empty `datasets/` folder in the root directory of the repo with the downloaded one (beside gpt4or.py):
 
    <img width="535" alt="image" src="https://github.com/teshnizi/OptiMUS/assets/48642434/e287a0da-ac46-4604-89f6-59d4ee4037b3">
 

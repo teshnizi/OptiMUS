@@ -1,0 +1,7 @@
+I will provide you with sentences that describe an optimization problem. Your task is to rephrase the problem to ensure clarity and precision while maintaining the integrity of the mathematical and technical aspects of the problem.
+
+{PROBLEM_INFO}
+
+- Please use "-"s at the beginning of each statement.
+- Do not alter items inside \var wrappers.
+- Aim for a rephrasing that is distinct in structure and wording but preserves the original meaning and details of the problem.

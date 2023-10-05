@@ -1,0 +1,43 @@
+
+Given an optimization problem with the following details:
+
+### PROBLEM TYPE:
+ {PROBLEM_TYPE}
+
+### PROBLEM INFO:
+ {PROBLEM_INFO}
+
+### INPUT FORMAT:
+ {INPUT_FORMAT}
+
+### OBJECTIVE:
+ {OBJECTIVE}
+
+### OUTPUT INFO:
+ {OUTPUT_INFO}
+
+### OUTPUT FORMAT:
+ {OUTPUT_FORMAT}
+
+A code reads the input from file called `data.json`, solves the problem, and writes the output in an `output.json` file. Develop a script that validates the generated output by checking for constraint violations and making sure the json format (keys) of the output is correct. I have a template for the test already:
+
+{INITIAL_TEST_SCRIPT}
+
+Complete the `run()` function of the script to perform the required validation checks as per the above requirements.
+
+### **Requirements:**
+1. **Checks:** Generate a bullet list of checks the script should perform.
+2. **Script Modification:** Only modify the `run()` function in the provided initial test script.
+3. **Return Value:** The `run()` function should return a list of strings indicating the errors in the output, or an empty list ([]) if the output is valid.
+4. **Libraries:** Assume necessary libraries are already installed.
+5. **Numerical Inaccuracy:** Use `eps` for all numerical comparisons (==, <=, <, >=, >) to account for any numerical inaccuracies. For instance, use x > -eps instead of x > 0.
+6. **Error Messages:** Generate informative and descriptive error messages, using f-strings where appropriate, to convey what is wrong with the output.
+
+
+### **Instructions:**
+- Start with imports and generate the complete script.
+- All keys read from the data file are strings and not integers.
+- Wrap the code in markdown (```).
+
+### **Task:**
+Complete the `run()` function of the script to perform the required validation checks as per the above requirements.

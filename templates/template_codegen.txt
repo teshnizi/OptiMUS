@@ -1,0 +1,27 @@
+Now, please generate Python code using {SOLVER} to solve the formulated optimization problem. The code will read the problem data from a file named "data.json" and should save the output in a file named "output.json".
+
+
+OUTPUT INFO: 
+{OUTPUT_INFO}
+
+your code should save the output as a file named "output.json" with indents of 4 spaces in this format:
+
+{OUTPUT_FORMAT}
+
+when writing the code, remember that
+{SOLVER_INSTRUCTION}
+- all keys that you read from the data file are strings and not integers
+- try to keep the code for adding different constraints separate to avoid confusion
+- ONLY generate the code, and don't generate anything else! I've already installed the necessary libraries.
+- Wrap the code using markdown ```
+
+
+
+### INSTRUCTIONS:
+1. **Read Data**: Read all necessary data from "data.json". Remember, all keys in the data file are strings.
+2. **Solver Instructions**: 
+{SOLVER_INSTRUCTION}
+3. **Code Structure**: Structure your code clearly, keeping the code for adding different constraints separate to maintain readability and avoid confusion.
+4. **Output File**: Save the results in "output.json" using the specified format.
+5. **Libraries**: Do not include installation of libraries; assume all necessary libraries are already installed.
+6. **Markdown**: Wrap the generated code using markdown triple backticks (```) to maintain format.

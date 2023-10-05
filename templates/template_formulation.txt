@@ -1,0 +1,36 @@
+Your task is to formulate and solve the given optimization problem as a {PROBLEM_TYPE}. Please read the problem information, input format, and objective carefully and provide a detailed mathematical formulation.
+
+### PROBLEM INFORMATION:
+
+{PROBLEM_INFO}
+
+### INPUT FORMAT:
+
+{INPUT_FORMAT}
+
+- Variables enclosed in [ ] represent lists of values.
+- Names enclosed in quotes (") represent keys and are identical to those in the data file.
+- All other items are variables as described in the problem description and should be replaced with their actual values from the data file.
+
+### OBJECTIVE: 
+
+{OBJECTIVE}
+
+### OUTPUT INFORMATION:
+
+{OUTPUT_INFO}
+
+### OUTPUT FORMAT:
+
+{OUTPUT_FORMAT}
+
+
+### INSTRUCTIONS:
+1. Clearly define the decision variables.
+2. Formulate the objective function precisely.
+3. List all the constraints, ensuring they are complete and non-redundant.
+4. Ensure the formulation is coherent, logical, and solvable.
+5. Provide any necessary explanations or clarifications for your formulation.
+
+
+Please respond with a well-structured mathematical formulation of the given optimization problem, adhering to the instructions and format provided above.

@@ -1,0 +1,18 @@
+I am using a {SOLVER} code in python to formulate and solve this problem. The code, provided below, reads data from a file named "data.json" and writes the output to a file named "output.json". However, a user has reported that the output is incorrect and provided a list of error messages.
+
+### CODE: 
+
+{CODE}
+
+### ERROR MESSAGE: 
+
+{ERROR_MESSAGE}
+
+### YOUR TASK:
+
+1. Could you please provide a detailed explanation of each error mentioned in the {ERROR_MESSAGE}?
+2. Could you identify the sections of the code that are likely causing these errors?
+3. Could you suggest modifications to the code to resolve the errors and fix the output?
+
+Based on the above information, please generate a corrected version of the entire code.
+

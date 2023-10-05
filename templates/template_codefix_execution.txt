@@ -1,0 +1,22 @@
+
+I am trying to solve the problem using a {SOLVER} code in python. The code reads data from a file named "data.json" and saves the output in a file named "output.json". When I run this code I get some errors.
+
+### ORIGINAL CODE:
+{CODE}
+
+### ERROR MESSAGES:
+
+{ERROR_MESSAGE}
+
+
+### INSTRUCTIONS:
+
+- Review the code carefully, considering the provided context.
+- Identify and correct any syntax errors in the code.
+- Ensure that the corrected code runs without errors and produces the expected output.
+- Wrap the generated code using markdown triple backticks (```) to maintain format.
+
+### YOUR TASK:
+
+- First read the code and understand what the problem(s) exactly are.
+- Then provide a corrected version of the code that resolves the errors and generates the expected outcome.

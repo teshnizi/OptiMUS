@@ -5,7 +5,7 @@ This repository contains the official implementation for [**OptiMUS**: Optimizat
 <br>
 <br>
 
-![optimus_agent](https://github.com/teshnizi/OptiMUS/assets/48642434/d4620f46-8742-4827-bb65-2735d854576f)
+![optimus_agent](https://github.com/teshnizi/OptiMUS/assets/48642434/23b1ab19-8248-4aad-8831-02cc895afffd)
 
 ## NLP4LP Dataset
 
@@ -16,7 +16,7 @@ You can download the dataset from [https://nlp4lp.vercel.app/](https://nlp4lp.ve
 1. Clone this repository
 2. Download [NLP4LP dataset zip file](https://nlp4lp.vercel.app/), extract the contents, and place "datasets" folder in the root directory of the repo (beside gpt4or.py):
 
-   <img width="535" alt="image" src="https://github.com/teshnizi/OptiMUS/assets/48642434/c7d20607-f1f1-4f68-adc6-f8e326f4d003">
+   <img width="535" alt="image" src="https://github.com/teshnizi/OptiMUS/assets/48642434/e287a0da-ac46-4604-89f6-59d4ee4037b3">
 
 3. Add your OpenAI API key(s) in `configure.py`:
 

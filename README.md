@@ -1,6 +1,6 @@
 # **OptiMUS**: Optimization Modeling Using mip Solvers and large language models
 
-This repository contains the official implementation for [**OptiMUS**: Optimization Modeling Using mip Solvers and large language models](https://arxiv.org/).
+This repository contains the official implementation for [**OptiMUS**: Optimization Modeling Using mip Solvers and large language models]([https://arxiv.org/](https://arxiv.org/abs/2310.06116)).
 
 <br>
 <br>

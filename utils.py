@@ -142,8 +142,8 @@ def get_initial_test_script(output_format: str):
     for num_field in range(len(json_fields)):
         script += """    if not "%s" in all_json_keys:\n""" % json_fields[num_field]
         script += (
-            """        error_list.append("The output field '%s' is missing")\n\n"""
-            % json_fields[num_field]
+                """        error_list.append("The output field '%s' is missing")\n\n"""
+                % json_fields[num_field]
         )
 
     script += "\n\n    #---------------------------------------------\n"
@@ -162,36 +162,53 @@ def get_solver_instruction(solver: str) -> str:
     if solver == "cvxpy":
         return "- cvxpy.sum takes a list as input, and not a generator"
     elif solver == "gurobi":
-        return "- if problem data is presented in percentage (%), do not forget to preprocess it"
+
+        return (
+            "- Write your code in PEP 8 Python format\n"
+            + "- if problem data is presented in percentage (%), do not forget to preprocess it\n"
+            + "- Use 'model = gp.Model()' to define the Gurobi model object"
+        )
+      
     else:
         return ""
 
 
-def read_problem_from_file(problem_path):
-    problem_path = os.path.join(problem_path, "description")
+def get_solver_demo(solver: str) -> Dict[str, str]:
+    demo_var = ""
+    demo_constr = ""
+    demo_solve = ""
 
-    with open(os.path.join(problem_path, "problem_info.txt"), "r") as f:
-        problem_info = f.read()
+    if solver == "gurobi":
+        demo_var = """
+from gurobipy import *
+model = Model()
+# Adding a single binary variable
+x = model.addVar(vtype=GRB.BINARY, name="x")        
+        
+# Adding several variables from y_1 to y_10 
+y = model.addVar(range(10), vtype=GRB.BINARY, name="y")
+"""
 
-    with open(os.path.join(problem_path, "input_format.txt"), "r") as f:
-        input_format = f.read()
+        demo_constr = """
+# Add one constraint
+model.addConstr(x <= 10.0)        
+        
+# Add multiple constraints
+model.addConstrs(y[i] <= 10.0 for i in range(10))
+        
+# Using quick sum to model summation
+model.addConstr(quicksum(y[i] for i in range(10)) <= 10.0)
+"""
 
-    with open(os.path.join(problem_path, "objective.txt"), "r") as f:
-        objective = f.read()
+        demo_solve = """
+# Set objective
+model.setObjective(quicksum(y[i] * (i + 1) for i in range(10)) <= 10.0)
+model.optimize()
+"""
 
-    with open(os.path.join(problem_path, "output_format.txt"), "r") as f:
-        output_format = f.read()
-
-    with open(os.path.join(problem_path, "output_info.txt"), "r") as f:
-        output_info = f.read()
-
-    return {
-        "problem_info": problem_info,
-        "input_format": input_format,
-        "objective": objective,
-        "output_format": output_format,
-        "output_info": output_info,
-    }
+    return {"var": demo_var,
+            "constr": demo_constr,
+            "solve": demo_solve}
 
 
 def get_templates():
@@ -202,6 +219,15 @@ def get_templates():
 
     with open(os.path.join(template_path, "template_codegen.txt")) as f:
         template_codegen = f.read()
+
+    with open(os.path.join(template_path, "template_codegen_constr.txt")) as f:
+        template_codegen_constr = f.read()
+
+    with open(os.path.join(template_path, "template_codegen_var.txt")) as f:
+        template_codegen_var = f.read()
+
+    with open(os.path.join(template_path, "template_codegen_objsolve.txt")) as f:
+        template_codegen_objsolve = f.read()
 
     with open(os.path.join(template_path, "template_codefix_execution.txt")) as f:
         template_codefix_execution = f.read()
@@ -224,6 +250,9 @@ def get_templates():
     return {
         "formulation": template_formulation,
         "codegen": template_codegen,
+        "codegen_var": template_codegen_var,
+        "codegen_constr": template_codegen_constr,
+        "codegen_objsolve": template_codegen_objsolve,
         "codefix_execution": template_codefix_execution,
         "codefix_data": template_codefix_data,
         "doublecheck": template_doublecheck,
@@ -234,7 +263,7 @@ def get_templates():
 
 
 def generate_formulation(
-    llm, templates, system_message, problem, problem_path, file_name="formulation.txt"
+        llm, templates, system_message, problem, problem_path, file_name="formulation.txt"
 ):
     formulation_request = HumanMessagePromptTemplate.from_template(
         templates["formulation"]
@@ -257,13 +286,13 @@ def generate_formulation(
 
 
 def generate_code(
-    llm,
-    templates,
-    system_message,
-    problem,
-    problem_path,
-    file_name="code.py",
-    double_check=True,
+        llm,
+        templates,
+        system_message,
+        problem,
+        problem_path,
+        file_name="code.py",
+        double_check=True,
 ):
     formulation_request = HumanMessagePromptTemplate.from_template(
         templates["formulation"]

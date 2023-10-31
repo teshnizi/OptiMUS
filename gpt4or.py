@@ -11,6 +11,9 @@ from configure import internal_prompt
 from configure import (
     template_formulation,
     template_codegen,
+    template_codegen_var,
+    template_codegen_constr,
+    template_codegen_objsolve,
     template_codefix_execution,
     template_codefix_data,
     template_rephrase,
@@ -22,7 +25,6 @@ from configure import api_keys
 
 # Import behavior parameters
 from configure import (
-    # MODE_STANDARD_PROMPT,
     MODE_COT_ONLY,
     MODE_COT_DEBUG,
     MODE_COT_DEBUG_TEST,
@@ -48,6 +50,7 @@ from utils import (
     get_initial_test_script,
     generate_instance_template,
     get_solver_instruction,
+    get_solver_demo,
 )
 
 
@@ -161,8 +164,12 @@ class GPT4OR(object):
             OUTPUT_FORMAT=self._data["output_format"],
             INITIAL_TEST_SCRIPT=self._data["initial_test_script"],
             CODE=self._data["code"],
+            CODE_AVAILABLE=self._data["code_available"],
             SOLVER=self._solver,
             SOLVER_INSTRUCTION=get_solver_instruction(self._solver),
+            SOLVER_VAR_DEMO=get_solver_demo(self._solver)["var"],
+            SOLVER_CONSTR_DEMO=get_solver_demo(self._solver)["constr"],
+            SOLVER_SOLVE_DEMO=get_solver_demo(self._solver)["solve"],
             ERROR_MESSAGE=self._errmsg,
         )
 
@@ -182,8 +189,12 @@ class GPT4OR(object):
             OUTPUT_FORMAT=self._data["output_format"],
             INITIAL_TEST_SCRIPT=self._data["initial_test_script"],
             CODE=self._data["code"],
+            CODE_AVAILABLE=self._data["code_available"],
             SOLVER=self._solver,
             SOLVER_INSTRUCTION=get_solver_instruction(self._solver),
+            SOLVER_VAR_DEMO=get_solver_demo(self._solver)["var"],
+            SOLVER_CONSTR_DEMO=get_solver_demo(self._solver)["constr"],
+            SOLVER_SOLVE_DEMO=get_solver_demo(self._solver)["solve"],
             ERROR_MESSAGE=self._errmsg,
         )
 
@@ -219,8 +230,9 @@ class GPT4OR(object):
         )
 
         self._data["initial_test_script"] = initial_test_script
+        self._data["code_available"] = ""
 
-    def _generate_formulation(self) -> None:
+    def _generate_formulation(self) -> str:
         """
         Let LLM generate the mathematical formulation of the instance
         :return:
@@ -270,11 +282,11 @@ class GPT4OR(object):
             self._solver_codes.append("raise Exception")
 
         self._data["code"] = self._solver_codes[-1]
-        self.dump_code(path_to_code=os.path.join(self._path, "code.py"))
+        self.dump_code(path_to_code=os.path.join(self._path, "gptcode.py"))
 
         return
 
-    def _generate_code(self) -> None:
+    def _generate_code(self) -> str:
         """
         Let LLM generate code for the instance
         :return:
@@ -308,9 +320,67 @@ class GPT4OR(object):
             self._solver_codes.append(output.content)
 
         self._data["code"] = self._solver_codes[-1]
-        self.dump_code(path_to_code=os.path.join(self._path, "code.py"))
+        self.dump_code(path_to_code=os.path.join(self._path, "gptcode.py"))
 
         return output.content
+
+    def _generate_code_progressive(self) -> str:
+        """
+        Let LLM generate code for the instance in a step-by-step way
+
+        1. Read data and create variables
+        2. Add constraints
+        3. Set objective, solve and write to output
+
+        :return:
+        """
+
+        formulation_request = HumanMessagePromptTemplate.from_template(
+            template_formulation
+        )
+
+        # Start from empty code
+        self._data["code_available"] = ""
+
+        # Input the previous response
+        formulation_response = AIMessage(content=self._formulation_response)
+
+        conversation = [
+            self._internal_prompt,
+            formulation_request,
+            formulation_response,
+        ]
+
+        for template in [
+            template_codegen_var,
+            template_codegen_constr,
+            template_codegen_objsolve,
+        ]:
+            codegen_request = HumanMessagePromptTemplate.from_template(template)
+            conversation.append(codegen_request)
+            self._user_says()
+
+            # First read data and generate variables
+            self._model_format(template)
+            self._global_conversations.append(self._model_format(template))  # noqa
+            messages = self._prompt_format(conversation)
+            self._chatbot_says()
+            output = self._llm(messages=messages)
+            self._llm_response = output.content
+            self._global_conversations.append(self._llm_response)
+
+            try:
+                self._data["code_available"] += (
+                    "\n%s" % output.content.split("```")[1][6:]
+                )
+            except IndexError:
+                raise RuntimeError("Code generation failed")
+
+        self._solver_codes.append(output.content.split("```")[1][6:])
+        self._data["code"] = self._solver_codes[-1]
+
+        self.dump_code(path_to_code=os.path.join(self._path, "gptcode.py"))
+        return self._data["code_available"]
 
     def _generate_test(self) -> None:
         """
@@ -388,7 +458,7 @@ class GPT4OR(object):
             num_iter += 1
             try:
                 subprocess.run(
-                    ["python", "code.py"], check=True, text=True, capture_output=True
+                    ["python", "gptcode.py"], check=True, text=True, capture_output=True
                 )
                 execution_ok = True
 
@@ -396,8 +466,8 @@ class GPT4OR(object):
                     res = []
                 else:
                     try:
-                        res = test.run()
-                    except:
+                        res = test.run()  # noqa
+                    except:  # noqa
                         self._log("==== Test script is invalid!")
                         self._iter = -1
                         break
@@ -410,7 +480,7 @@ class GPT4OR(object):
                     self._log("==== Some tests failed!")
                     self._log("Test results: %s" % res)
                     raise subprocess.CalledProcessError(
-                        returncode=1, cmd="python code.py", stderr="\n".join(res)
+                        returncode=1, cmd="python gptcode.py", stderr="\n".join(res)
                     )
 
             except subprocess.CalledProcessError as e:
@@ -452,7 +522,7 @@ class GPT4OR(object):
 
                 try:
                     self._solver_codes.append(output.content.split("```")[-2][6:])
-                except:
+                except:  # noqa
                     self.dump_conversation()
                     raise Exception("Can't find code in the output of the LLM!")
 
@@ -480,6 +550,7 @@ class GPT4OR(object):
     ):
         """
         :param problem_path: Path to description.txt
+        :param problem_file: description.txt
         :param n_rephrase: Number of rephrased instances
         :param output_path: Path of output.
         :return:
@@ -583,7 +654,7 @@ class GPT4OR(object):
         # First evaluate validity of code syntax
         try:
             subprocess.run(
-                ["python", "code.py"], check=True, text=True, capture_output=True
+                ["python", "gptcode.py"], check=True, text=True, capture_output=True
             )
         except subprocess.CalledProcessError:
             os.chdir(current_path)
@@ -656,7 +727,7 @@ class GPT4OR(object):
         if solver is not None:
             self._solver = solver
 
-        # Common step aaug all the parameter settings
+        # Common step aug all the parameter settings
         self._log("==== Connecting to chat bot...")
         self._connect_chatbot()
         self._problem_path = problem_path
@@ -734,7 +805,7 @@ class GPT4OR(object):
             raise ValueError("No code to dump!")
 
         if path_to_code is None:
-            path_to_code = "code.py"
+            path_to_code = "gptcode.py"
         with open(path_to_code, "w") as f:
             f.write(self._solver_codes[-1])
 
@@ -749,11 +820,11 @@ class GPT4OR(object):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--model", type=str, default="gpt-3.5-turbo", help="Model name")
+parser.add_argument("--model", type=str, default="gpt-4", help="Model name")
 parser.add_argument(
     "--prob",
     type=str,
-    default="./datasets/introduction_to_linear_optimization/problem_15",
+    default="./datasets/lectures_in_lp_modeling/problem_2",
     help="Problem path",
 )
 parser.add_argument(
@@ -775,14 +846,16 @@ parser.add_argument(
 parser.add_argument(
     "--mode",
     type=int,
-    default=105,
+    default=102,
     help="102: Prompt, 103: Prompt + Debug, 104: Prompt + Debug + AutoTest, 105: Prompt + Debug + Human Test",
 )
 parser.add_argument(
     "--rephrase",
     type=int,
     default=0,
-    help="Number of rephrases. If more than 0, the agent will only generate rephrases of the problem and will NOT solve the problem. The rephrased instances can then later be used by setting the aug parameter to the number of rephrases.",
+    help="Number of rephrases. If more than 0, the agent will only generate rephrases of the problem and will NOT "
+    "solve the problem. The rephrased instances can then later be used by setting the aug parameter to the "
+    "number of rephrases.",
 )
 parser.add_argument("--verbose", type=bool, default=False, help="Verbose mode")
 

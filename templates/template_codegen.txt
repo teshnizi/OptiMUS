@@ -1,4 +1,4 @@
-Now, please generate Python code using {SOLVER} to solve the formulated optimization problem. The code will read the problem data from a file named "data.json" and should save the output in a file named "output.json".
+Now, please generate a Python code using {SOLVER} to solve the formulated optimization problem. The code will read the problem data from a file named "data.json" and should save the output in a file named "output.json".
 
 
 OUTPUT INFO: 
@@ -14,6 +14,8 @@ when writing the code, remember that
 - try to keep the code for adding different constraints separate to avoid confusion
 - ONLY generate the code, and don't generate anything else! I've already installed the necessary libraries.
 - Wrap the code using markdown ```
+- Write code in Python PEP 8 style
+- Use 'model' as the name of the gurobi model object
 
 
 
@@ -25,3 +27,5 @@ when writing the code, remember that
 4. **Output File**: Save the results in "output.json" using the specified format.
 5. **Libraries**: Do not include installation of libraries; assume all necessary libraries are already installed.
 6. **Markdown**: Wrap the generated code using markdown triple backticks (```) to maintain format.
+
+Take a deep breath and work on this problem step by step.

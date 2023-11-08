@@ -37,12 +37,17 @@ templates = get_templates()
 ...
 ```
 
-4. Install the requirements using `pip install -r requirements.txt`
+4. Install the requirements
+
+```
+pip install langchain
+pip install openai
+```
 5. Run the agent:
 
-   ```bash
-   python gpt4or --model gpt-4 --maxtry 5 --mode 105 --verbose True --prob ./datasets/introduction_to_linear_optimization/problem_1
-   ```
+```bash
+python gpt4or --model gpt-4 --maxtry 5 --mode 105 --verbose True --prob ./datasets/introduction_to_linear_optimization/problem_1
+```
 
 ## Modes and Options:
 

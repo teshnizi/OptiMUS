@@ -1,9 +1,12 @@
 
 
 
+
+
 # <img width="48" alt="image" src="https://github.com/teshnizi/OptiMUS/assets/48642434/d496427c-83cd-4e23-9734-3ea53c412f02"> **OptiMUS**: Optimization Modeling Using mip Solvers and large language models
 
-This repository contains the official implementation for [**OptiMUS**: Optimization Modeling Using mip Solvers and large language models](https://arxiv.org/abs/2310.06116).
+This repository contains the official implementation for [**OptiMUS**: Optimization Modeling Using mip Solvers and large language models](https://arxiv.org/abs/2310.06116). 
+Demo (Under construction): https://optimus-demo.vercel.app/
 
 <br>
 <br>

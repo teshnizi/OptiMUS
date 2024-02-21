@@ -1,4 +1,6 @@
-# **OptiMUS**: Scalable Optimization Modeling with (MI) LP Solvers and Large Language Models
+# **OptiMUS**: Scalable Optimization Modeling with (MI)LP Solvers and Large Language Models
+
+#### Live demo: https://optimus-solver.vercel.app/
 
 This repository contains the official implementations for [OptiMUS: Scalable Optimization Modeling with (MI) LP Solvers and Large Language Models](https://arxiv.org/pdf/2402.10172). Check out [this](https://github.com/teshnizi/OptiMUS/tree/optimus_v1) branch for an implementation of the older version.
 

@@ -71,3 +71,13 @@ options:
                        the number of rephrases.
   --verbose VERBOSE    Verbose mode
 ```
+
+## Reference 
+```
+@article{ahmaditeshnizi2023optimus,
+  title={OptiMUS: Optimization Modeling Using mip Solvers and large language models},
+  author={AhmadiTeshnizi, Ali and Gao, Wenzhi and Udell, Madeleine},
+  journal={arXiv preprint arXiv:2310.06116},
+  year={2023}
+}
+```

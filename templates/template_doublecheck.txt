@@ -1,5 +1,0 @@
-Let's go through the problem statement and double-check to make sure everything is included in the code:
-
-{PROBLEM_INFO}
-
-If nothing is missing, write "--- OK ---". Otherwise, write "--- MISSING ---" and generate a new code that incorporates the missing information.

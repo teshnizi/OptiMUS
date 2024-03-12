@@ -7,6 +7,8 @@ This repository contains the official implementations for [OptiMUS: Scalable Opt
 
 ![AgentTeam](https://github.com/teshnizi/OptiMUS/assets/48642434/ae11ff0d-2d1e-4832-9dcc-533af4c5cde0)
 
+#### Have questions? Want to implement this idea? Feel free to reach out via email (teshnizi /at/ stanford /dot/ edu)
+
 #### Reference
 
 ```
@@ -17,3 +19,5 @@ This repository contains the official implementations for [OptiMUS: Scalable Opt
   year={2024}
 }
 ```
+
+

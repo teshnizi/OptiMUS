@@ -7,7 +7,7 @@ prompt_templates = [
     """
 You are an optimization expert with a focus on mathematical and operational problems. Your task is to interpret a given optimization problem description, understand its nuances, and convert it into a structured standard form.
 
-Upon receiving a problem description (with parameters marked as \\param{{param_name}}), you should:
+Upon receiving a problem description (with parameters marked as \param{{param_name}}), you should:
 
 1. Carefully analyze and comprehend the problem.
 2. Clearly define the background and context of the problem.
@@ -192,6 +192,22 @@ def extract_targets_for_lpwp_instance(folder_dir: str, client):
 
 if __name__ == "__main__":
     client = get_openai_client()
+    # for index in range(1, 288):
+    #     print(index)
+
+    #     if os.path.exists(f"data/nl4opt/LPWP/prob_{index}/input_targets.json"):
+    #         continue
+
+    #     try:
+    #         prob_json = extract_targets_for_lpwp_instance(
+    #             f"data/nl4opt/LPWP/prob_{index}", client=client
+    #         )
+
+    #         with open(f"data/nl4opt/LPWP/prob_{index}/input_targets.json", "w") as f:
+    #             json.dump(prob_json, f, indent=4)
+    #     except Exception as e:
+    #         print(e)
+    #         continue
 
     parent_path = "data/ComplexOR"
     for folder in os.listdir(parent_path):
@@ -212,3 +228,22 @@ if __name__ == "__main__":
         with open(f"{parent_path}/{folder}/input_targets.json", "w") as f:
             json.dump(prob_json, f, indent=4)
 
+    # parent_path = "../data/nlp4lp"
+
+    # for folder in os.listdir(parent_path):
+    #     if not os.path.isdir(f"{parent_path}/{folder}"):
+    #         continue
+    #     print(folder)
+    #     if os.path.exists(f"{parent_path}/{folder}/input_targets.json"):
+    #         continue
+
+    #     input_json = json.load(
+    #         open(f"{parent_path}/{folder}/input.json", "r", encoding="utf-8")
+    #     )
+
+    #     prob_json = extract_targets_for_lpwp_instance(
+    #         f"{parent_path}/{folder}", client=client
+    #     )
+
+    #     with open(f"{parent_path}/{folder}/input_targets.json", "w") as f:
+    #         json.dump(prob_json, f, indent=4)

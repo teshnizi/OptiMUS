@@ -10,8 +10,7 @@ class GroupChatManager(Agent):
     ):
         super().__init__(
             name="GroupChatManager",
-            description="This is a manager agent that chooses which agent to work on the problem next and organizes "
-                        "the conversation within its team.",
+            description="This is a manager agent that chooses which agent to work on the problem next and organizes the conversation within its team.",
             client=client,
             **kwargs,
         )
@@ -24,10 +23,8 @@ class GroupChatManager(Agent):
         self.history = []
         self.prompt_template = """
         
-You're a manager in a team of optimization experts. The goal of the team is to solve an optimization problem. Your 
-task is to choose the next expert to work on the problem based on the current situation. - The user has already given 
-us the problem description, the objective function, and the parameters. Only call the user proxy if there is a 
-problem or something ambiguous or missing. 
+You're a manager in a team of optimization experts. The goal of the team is to solve an optimization problem. Your task is to choose the next expert to work on the problem based on the current situation. 
+- The user has already given us the problem description, the objective function, and the parameters. Only call the user proxy if there is a problem or something ambiguous or missing. 
 
 Here's the list of agents in your team:
 -----
@@ -40,12 +37,14 @@ And here's the history of the conversation so far:
 -----
 
 
-Considering the history, if you think the problem is solved, type DONE. Otherwise, generate a json file with the 
-following format: {{ "agent_name": "Name of the agent you want to call next", "task": "The task you want the agent to 
-carry out" }} 
+Considering the history, if you think the problem is solved, type DONE. Otherwise, generate a json file with the following format:
+{{
+    "agent_name": "Name of the agent you want to call next",
+    "task": "The task you want the agent to carry out"
+}}
 
 to identify the next agent to work on the problem, and also the task it has to carry out. 
-- If there is a runtime error, ask the the programmer agent to fix it.
+- If there is a runtime error, ask the the prorammer agent to fix it.
 - Only generate the json file, and don't generate any other text.
 - If the latest message in history says that the code is fixed, ask the evaluator agent to evaluate the code!
 
@@ -55,13 +54,13 @@ to identify the next agent to work on the problem, and also the task it has to c
         self.history = []
 
         while True:
-
             if self.conversation_state["round"] >= self.max_rounds:
                 return "The problem is not solved.", state
 
             print("=" * 20)
             print("=" * 20)
             print("Round", self.conversation_state["round"])
+            # print(json.dumps(state, indent=4))
 
             agents_list = "".join(
                 [
@@ -92,7 +91,7 @@ to identify the next agent to work on the problem, and also the task it has to c
                     break
 
                 except Exception as e:
-
+                    print(response)
                     print(e)
                     cnt -= 1
 
@@ -109,6 +108,9 @@ to identify the next agent to work on the problem, and also the task it has to c
             )
 
             print(f"\n---- Decision:||{decision}||\n")
+
+            # wait for the user to press enter
+            # input()
 
             if not decision["agent_name"] in [agent.name for agent in self.agents]:
                 raise ValueError(
@@ -127,9 +129,6 @@ to identify the next agent to work on the problem, and also the task it has to c
                     sender=self,
                 )
 
-                with open(state["log_folder"] + "/conversation.json", "w") as f:
-                    json.dump(self.history, f, indent=4)
-
                 with open(
                     f"{state['log_folder']}/log_{self.conversation_state['round']}.json",
                     "w",
@@ -140,5 +139,12 @@ to identify the next agent to work on the problem, and also the task it has to c
 
                 decision["result"] = message
                 self.history.append((decision, state))
+
+                with open(state["log_folder"] + "/selection_log.json", "w") as f:
+                    json.dump([d for (d, s) in self.history], f, indent=4)
+
+                if "code" in state:
+                    with open(state["log_folder"] + "/code.py", "w") as f:
+                        f.write(state["code"])
 
                 self.conversation_state["round"] += 1

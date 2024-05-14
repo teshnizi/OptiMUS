@@ -1,6 +1,7 @@
 """
 Define templates for json file
 """
+
 import json
 from typing import List, Dict, Union
 import openai
@@ -149,14 +150,14 @@ class NLParamParser(object):
 
             if parameter["shape"]:
                 code_symbol = parameter["symbol"].split("_")[0]
-                parameter[
-                    "code"
-                ] = f'{code_symbol} = np.array(data["{code_symbol}"]) # {parameter["shape"]}'
+                parameter["code"] = (
+                    f'{code_symbol} = np.array(data["{code_symbol}"]) # {parameter["shape"]}'
+                )
             else:
                 code_symbol = parameter["symbol"].split("_")[0]
-                parameter[
-                    "code"
-                ] = f'{code_symbol} = data["{code_symbol}"] # scalar parameter'
+                parameter["code"] = (
+                    f'{code_symbol} = data["{code_symbol}"] # scalar parameter'
+                )
 
         return state
 
@@ -242,7 +243,7 @@ def get_openai_client():
     config["openai_api_key"]
 
     client = openai.Client(
-        api_key=config["openai_api_key"], organization=config["openai_org"]
+        api_key=config["openai_api_key"], organization=config["openai_org_id"]
     )
 
     return client

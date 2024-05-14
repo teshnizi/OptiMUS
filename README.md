@@ -51,7 +51,7 @@ OptiMUS
 │       nl4opt/
 ```
 
-Please note that complexor and nlp4lp datasets are available here (in the supplementary material): https://openreview.net/forum?id=HobyL1B9CZ
+NLP4LP is available [here](https://nlp4lp.vercel.app/). ComplexOR and NLP4LP datasets are available here (in the supplementary material): https://openreview.net/forum?id=HobyL1B9CZ
 
 ### Run the script:
 

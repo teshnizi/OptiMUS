@@ -6,7 +6,11 @@ This repository contains the official implementation for
 
 [OptiMUS: Optimization Modeling Using mip Solvers and large language models](https://arxiv.org/pdf/2310.06116).
 
+[OptiMUS-0.3: Using Large Language Models to Model and Solve Optimization Problems at Scale](https://arxiv.org/abs/2407.19633)
+
 ![optimus_agent](https://github.com/teshnizi/OptiMUS/assets/48642434/d4620f46-8742-4827-bb65-2735d854576f)
+
+
 
 ## NLP4LP Dataset
 
@@ -39,3 +43,19 @@ You can download the dataset from [https://nlp4lp.vercel.app/](https://nlp4lp.ve
   year={2024}
 }
 ```
+
+**OptiMUS v3** adds RAG and large-scale optimization techniques. 
+
+```
+@article{ahmaditeshnizi2024optimus,
+  title={OptiMUS-0.3: Using Large Language Models to Model and Solve Optimization Problems at Scale},
+  author={AhmadiTeshnizi, Ali and Gao, Wenzhi and Brunborg, Herman and Talaei, Shayan and Udell, Madeleine},
+  journal={arXiv preprint arXiv:2407.19633},
+  year={2024}
+}
+```
+
+
+
+
+

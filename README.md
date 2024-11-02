@@ -1,10 +1,18 @@
 # **OptiMUS**: Optimization Modeling Using mip Solvers and large language models
 
-This repository contains the official implementation for 
 
-[OptiMUS: Scalable Optimization Modeling with (MI) LP Solvers and Large Language Models](https://arxiv.org/pdf/2402.10172).
+
+
+#### Live demo: https://optimus-solver.com/
+
+
+This repository contains the official implementation for :
+
+
 
 [OptiMUS: Optimization Modeling Using mip Solvers and large language models](https://arxiv.org/pdf/2310.06116).
+
+[OptiMUS: Scalable Optimization Modeling with (MI) LP Solvers and Large Language Models](https://arxiv.org/pdf/2402.10172).
 
 [OptiMUS-0.3: Using Large Language Models to Model and Solve Optimization Problems at Scale](https://arxiv.org/abs/2407.19633)
 

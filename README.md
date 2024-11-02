@@ -1,13 +1,7 @@
 # **OptiMUS**: Optimization Modeling Using mip Solvers and large language models
 
 
-
-
-#### Live demo: https://optimus-solver.com/
-
-
-This repository contains the official implementation for :
-
+This repository contains the official implementation for the following three papers (you can use branches to access the other versions):
 
 
 [OptiMUS: Optimization Modeling Using mip Solvers and large language models](https://arxiv.org/pdf/2310.06116).
@@ -19,6 +13,7 @@ This repository contains the official implementation for :
 ![optimus_agent](https://github.com/teshnizi/OptiMUS/assets/48642434/d4620f46-8742-4827-bb65-2735d854576f)
 
 
+#### Live demo: https://optimus-solver.com/
 
 ## NLP4LP Dataset
 

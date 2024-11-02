@@ -1,6 +1,0 @@
-{
-    "openai_api_key": "OPENAI_API_KEY",
-    "openai_org_id": "OPENAI_ORG",
-    "together_api_key": "TOGETHER_API_KEY",
-    "mistral_api_key": "MISTRAL_API_KEY"
-}

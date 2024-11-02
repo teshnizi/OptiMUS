@@ -10,7 +10,8 @@ This repository contains the official implementation for the following three pap
 
 [OptiMUS-0.3: Using Large Language Models to Model and Solve Optimization Problems at Scale](https://arxiv.org/abs/2407.19633)
 
-![optimus_agent](https://github.com/teshnizi/OptiMUS/assets/48642434/d4620f46-8742-4827-bb65-2735d854576f)
+<img width="845" alt="image" src="https://github.com/user-attachments/assets/72fbbf20-32ee-4715-a2d5-819133a346ee">
+
 
 
 #### Live demo: https://optimus-solver.com/

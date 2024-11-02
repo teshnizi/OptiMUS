@@ -18,9 +18,7 @@ This repository contains the official implementation for the following three pap
 
 ## NLP4LP Dataset
 
-You can download the dataset from [https://nlp4lp.vercel.app/](https://nlp4lp.vercel.app/). Please note that NLP4LP is intended and licensed for research use only. The dataset is CC BY NC 4.0 (allowing only non-commercial use) and models trained using the dataset should not be used outside of research purposes.
-
-
+You can download the dataset from [https://huggingface.co/datasets/udell-lab/NLP4LP](https://huggingface.co/datasets/udell-lab/NLP4LP). Please note that NLP4LP is intended and licensed for research use only. The dataset is CC BY NC 4.0 (allowing only non-commercial use) and models trained using the dataset should not be used outside of research purposes.
 
 #### References
 

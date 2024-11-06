@@ -16,9 +16,20 @@ This repository contains the official implementation for :
 
 [OptiMUS-0.3: Using Large Language Models to Model and Solve Optimization Problems at Scale](https://arxiv.org/abs/2407.19633)
 
+<details>
+<summary>High-level overview of steps for V0.3</summary>
+
+| Step                                           | Template Used                                      | Inputs (from State)                                                                                               | Additional Inputs                                | State Entries Used                                                                          | State Entries Updated                                                                                                |
+| ---                                            | ---                                                | ---                                                                                                               | ---                                              | ---                                                                                         | ---                                                                                                                  |
+| 1. Extract Objective Description               | `prompt_objective`                                 | `state["description"]`, `state["parameters"]`                                                                     | `model`, `check`, `logger`, `rag_mode`, `labels` | `state["description"]`, `state["parameters"]`                                               | `state["objective"]["description"]`, `state["objective"]["formulation"] = None`, `state["objective"]["code"] = None` |
+| 2. Extract Constraints                         | `prompt_constraints`                               | `state["description"]`, `state["parameters"]`                                                                     | Same as above                                    | `state["description"]`, `state["parameters"]`                                               | `state["constraints"]` (List of constraints with:  `"description"`, `"formulation" = None`, `"code" = None`)         |
+| 3. Formulate Constraints Mathematically        | `prompt_constraints_model`                         | `state["description"]`, `state["parameters"]`, `state["constraints"]`, `state.get("variables", {})`               | Same as above                                    | `state["description"]`, `state["parameters"]`, `state["constraints"]`, `state["variables"]` | `state["constraints"][i]["formulation"]`, `state["variables"]` (updated with new variables)                          |
+| 4. Formulate Objective Mathematically          | `prompt_objective_model`                           | `state["description"]`, `state["parameters"]`, `state["variables"]`, `state["objective"]`                         | Same as above                                    | `state["objective"]`, `state["variables"]`                                                  | `state["objective"]["formulation"]`                                                                                  |
+| 5. Generate Code for Constraints and Objective | `prompt_constraints_code`, `prompt_objective_code` | `state["description"]`, `state["parameters"]`, `state["variables"]`, `state["constraints"]`, `state["objective"]` | `directions`, `solver`, `model`, `check`         | `state["constraints"]`, `state["objective"]`                                                | `state["constraints"][i]["code"]`, `state["objective"]["code"]`                                                      |
+| 6. Execute and Debug Code                      | `debug_template`                                   | `state["description"]`                                                                                            | `dir`, `model`, `logger`, `max_tries`            | N/A                                                                                         | N/A (Code execution and potential updates to code files during debugging)                                            |
+</details>
+
 ![optimus_agent](https://github.com/teshnizi/OptiMUS/assets/48642434/d4620f46-8742-4827-bb65-2735d854576f)
-
-
 
 ## NLP4LP Dataset
 

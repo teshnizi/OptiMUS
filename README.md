@@ -58,6 +58,11 @@ You can download the dataset from [https://huggingface.co/datasets/udell-lab/NLP
 ```
 
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=teshnizi/OptiMUS&type=date&legend=top-left)](https://www.star-history.com/#teshnizi/OptiMUS&type=date&legend=top-left)
+
+
 
 
 
